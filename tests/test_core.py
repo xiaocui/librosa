@@ -20,7 +20,7 @@ import glob
 import numpy as np
 import scipy.io
 import six
-from nose.tools import eq_, raises, make_decorator
+from nose.tools import eq_, raises
 
 import warnings
 warnings.resetwarnings()
@@ -444,7 +444,7 @@ def test_magphase():
 def test_istft_reconstruction():
     from scipy.signal import bartlett, hann, hamming, blackman, blackmanharris
 
-    def __test(x, n_fft, hop_length, window, atol):
+    def __test(n_fft, hop_length, window, atol, x):
         S = librosa.core.stft(
             x, n_fft=n_fft, hop_length=hop_length, window=window)
         x_reconstructed = librosa.core.istft(
@@ -479,10 +479,10 @@ def test_istft_reconstruction():
                 # tests with pre-computed window fucntions
                 for hop_length_denom in six.moves.range(2, 9):
                     hop_length = n_fft // hop_length_denom
-                    yield (__test, x, n_fft, hop_length, win, atol)
-                    yield (__test, x, n_fft, hop_length, symwin, atol)
+                    yield (__test, n_fft, hop_length, win, atol, x)
+                    yield (__test, n_fft, hop_length, symwin, atol, x)
                 # also tests with passing widnow function itself
-                yield (__test, x, n_fft, n_fft // 9, window_func, atol)
+                yield (__test, n_fft, n_fft // 9, window_func, atol, x)
 
         # test with default paramters
         x_reconstructed = librosa.core.istft(librosa.core.stft(x))
