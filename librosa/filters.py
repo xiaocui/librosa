@@ -878,7 +878,7 @@ def get_window(window, Nx, fftbins=True):
         raise ParameterError('Invalid window specification: {}'.format(window))
 
 
-@optional_jit
+@optional_jit(nopython=True)
 def __window_ss_fill(x, win_sq, n_frames, hop_length):
     '''Helper function for window sum-square calculation.'''
 

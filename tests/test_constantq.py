@@ -63,7 +63,7 @@ def make_signal(sr, duration, fmin='C1', fmax='C8'):
 
     return np.sin(np.cumsum(2 * np.pi * np.logspace(np.log10(fmin),
                                                     np.log10(fmax),
-                                                    num=duration * sr)))
+                                                    num=int(duration * sr))))
 
 
 def test_cqt():
